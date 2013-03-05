@@ -113,20 +113,26 @@ object ConsoleProducer {
     val reader = Class.forName(readerClass).newInstance().asInstanceOf[MessageReader]
     reader.init(System.in, cmdLineProps)
 
-    val producer = new Producer[Any, Any](new ProducerConfig(props))
+    try {
+        val producer = new Producer[Any, Any](new ProducerConfig(props))
 
-    Runtime.getRuntime.addShutdownHook(new Thread() {
-      override def run() {
-        producer.close()
-      }
-    })
+        Runtime.getRuntime.addShutdownHook(new Thread() {
+          override def run() {
+            producer.close()
+          }
+        })
 
-    var message: AnyRef = null
-    do { 
-      message = reader.readMessage()
-      if(message != null)
-        producer.send(new ProducerData(topic, message))
-    } while(message != null)
+        var message: AnyRef = null
+        do {
+          message = reader.readMessage()
+          if(message != null)
+            producer.send(new ProducerData(topic, message))
+        } while(message != null)
+    } catch {
+      case e: Exception =>
+        e.printStackTrace
+        System.exit(1)
+    }
     System.exit(0)
   }
 
