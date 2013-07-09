@@ -1,5 +1,5 @@
-kafka (0.8~20130610-1) unstable; urgency=low
+kafka (0.7.2-0disqus1) unstable; urgency=low
 
   * Initial release.
 
- -- Alexandros Kosiaris <akosiaris@wikimedia.org>  Wed, 29 May 2013 23:45:30 +0000
+ -- Disqus Ops <ops@disqus.com>  Wed, 29 May 2013 23:45:30 +0000
