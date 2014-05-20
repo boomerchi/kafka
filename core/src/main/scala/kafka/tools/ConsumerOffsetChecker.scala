@@ -29,14 +29,14 @@ object ConsumerOffsetChecker extends Logging {
 
   private val BidPidPattern = """(\d+)-(\d+)""".r
 
-  private val BrokerIpPattern = """.*:(\d+\.\d+\.\d+\.\d+):(\d+$)""".r
+  private val BrokerHostPattern = """.*:(.*?):(\d+$)""".r
   // e.g., 127.0.0.1-1315436360737:127.0.0.1:9092
 
   private def getConsumer(zkClient: ZkClient, bid: String): Option[SimpleConsumer] = {
     val brokerInfo = ZkUtils.readDataMaybeNull(zkClient, "/brokers/ids/%s".format(bid))
     val consumer = brokerInfo match {
-      case BrokerIpPattern(ip, port) =>
-        Some(new SimpleConsumer(ip, port.toInt, 10000, 100000))
+      case BrokerHostPattern(host, port) =>
+        Some(new SimpleConsumer(host, port.toInt, 10000, 100000))
       case _ =>
         error("Could not parse broker info %s".format(brokerInfo))
         None
