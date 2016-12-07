@@ -47,11 +47,11 @@ index 0000000..b2a9961
 +export INSTALL=install -D -m 644
 +
 +# Figure this out as well as other dependencies
-+export SCALA_LIBRARY=/usr/share/java/scala-library-2.9.1.jar
++export SCALA_LIBRARY=/usr/share/java/scala-library-2.9.2.jar
 +
 +# DESTDIR
 +ifndef PREFIX
-+export PREFIX=/usr/local
++export PREFIX=/usr
 +endif
 +ifndef SYSCONFDIR
 +export SYSCONFDIR=/usr/local/etc/kafka
@@ -70,12 +70,12 @@ index 0000000..b2a9961
 +# It will find and add to the CLASSPATH variable all jars in $(PREFIX)/usr/share
 +# Hopefully CLASSPATH will be defined and this will be unused
 +SYS_CLASSDIR:=$(PREFIX)/share/java
-+SYS_CLASSJARS:=$(shell find $(SYS_CLASSDIR) -name "*.jar")
++SYS_CLASSJARS:=$(shell find $(SYS_CLASSDIR) -name "*.jar" -not -name "*log4j-over-slf4j*")
 +export SYS_CLASSPATH:=$(shell echo $(SYS_CLASSJARS) | sed -e 's/ /:/g')
 +
 +# Same here, just this is done for the shipped jar dependencies. 
 +EXT_CLASSDIR:=$(CURDIR)/ext
-+EXT_CLASSJARS:=$(shell find $(EXT_CLASSDIR) -name "*.jar")
++EXT_CLASSJARS:=$(shell find $(EXT_CLASSDIR) -name "*.jar" -not -name "*log4j-over-slf4j*")
 +export EXT_CLASSPATH:=$(shell echo $(EXT_CLASSJARS) | sed -e 's/ /:/g')
 +
 +ifndef CLASSPATH
