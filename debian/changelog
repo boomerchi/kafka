@@ -1,3 +1,9 @@
+kafka (0.7.2-0disqus3) unstable; urgency=low
+
+  * Build for Xenial with systemd support
+
+ -- Disqus Ops <ops@disqus.com>  Fri, 02 Jun 2017 15:34:30 -0400
+
 kafka (0.7.2-0disqus2) unstable; urgency=low
 
   * Initial release.

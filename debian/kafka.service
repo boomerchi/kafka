@@ -1,0 +1,23 @@
+[Unit]
+Description=Apache Kafka server (broker)
+Requires=network.target
+After=network.target
+ConditionPathExists=/etc/kafka/server.properties
+
+[Service]
+Type=simple
+PIDFile=/var/run/kafka.pid
+User=kafka
+Group=kafka
+EnvironmentFile=/etc/default/kafka
+ExecStart=/usr/bin/java \
+        -cp ${CLASSPATH} \
+        $JAVA_OPTS \
+        $KAFKA_OPTS \
+        $KAFKA_JMX_OPTS \
+        kafka.Kafka /etc/kafka/server.properties
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
+
